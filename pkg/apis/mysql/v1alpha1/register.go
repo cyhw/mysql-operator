@@ -1,10 +1,10 @@
 package v1alpha1
 
 import (
+	"github.com/cyhw/mysql-operator/pkg/apis/mysql"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"mysql-operator/pkg/apis/mysql"
 )
 
 // SchemeGroupVersion is group version used to register these objects.

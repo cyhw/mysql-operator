@@ -1,4 +1,4 @@
-module mysql-operator
+module github.com/cyhw/mysql-operator
 
 go 1.19
 
