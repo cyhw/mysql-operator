@@ -18,10 +18,10 @@ limitations under the License.
 
 package v1alpha1
 
-// MysqlListerExpansion allows custom methods to be added to
-// MysqlLister.
-type MysqlListerExpansion interface{}
+// MySQLListerExpansion allows custom methods to be added to
+// MySQLLister.
+type MySQLListerExpansion interface{}
 
-// MysqlNamespaceListerExpansion allows custom methods to be added to
-// MysqlNamespaceLister.
-type MysqlNamespaceListerExpansion interface{}
+// MySQLNamespaceListerExpansion allows custom methods to be added to
+// MySQLNamespaceLister.
+type MySQLNamespaceListerExpansion interface{}

@@ -30,7 +30,7 @@ var (
 
 // Adds the list of known types to Scheme.
 func addKnownTypes(scheme *runtime.Scheme) error {
-	scheme.AddKnownTypes(SchemeGroupVersion, &Mysql{}, &MysqlList{})
+	scheme.AddKnownTypes(SchemeGroupVersion, &MySQL{}, &MySQLList{})
 
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 

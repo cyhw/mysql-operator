@@ -7,31 +7,31 @@ import (
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// Mysql is a simple user-defined resource.
-type Mysql struct {
+// MySQL is a simple user-defined resource.
+type MySQL struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   MysqlSpec   `json:"spec"`
-	Status MysqlStatus `json:"status"`
+	Spec   MySQLSpec   `json:"spec"`
+	Status MySQLStatus `json:"status"`
 }
 
-// MysqlSpec is the spec of Mysql.
-type MysqlSpec struct {
+// MySQLSpec is the spec of Mysql.
+type MySQLSpec struct {
 	Version string `json:"version"`
 }
 
-// MysqlStatus is the status of Mysql.
-type MysqlStatus struct {
+// MySQLStatus is the status of Mysql.
+type MySQLStatus struct {
 	Message string `json:"message"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// MysqlList is the list of Mysql resources.
-type MysqlList struct {
+// MySQLList is the list of Mysql resources.
+type MySQLList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 
-	Items []Mysql `json:"items"`
+	Items []MySQL `json:"items"`
 }

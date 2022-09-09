@@ -28,4 +28,4 @@ spec:
   names:
     plural: mysqls
     singular: mysql
-    kind: Mysql
+    kind: MySQL

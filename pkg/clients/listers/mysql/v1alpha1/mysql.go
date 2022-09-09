@@ -25,69 +25,69 @@ import (
 	"k8s.io/client-go/tools/cache"
 )
 
-// MysqlLister helps list Mysqls.
+// MySQLLister helps list MySQLs.
 // All objects returned here must be treated as read-only.
-type MysqlLister interface {
-	// List lists all Mysqls in the indexer.
+type MySQLLister interface {
+	// List lists all MySQLs in the indexer.
 	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha1.Mysql, err error)
-	// Mysqls returns an object that can list and get Mysqls.
-	Mysqls(namespace string) MysqlNamespaceLister
-	MysqlListerExpansion
+	List(selector labels.Selector) (ret []*v1alpha1.MySQL, err error)
+	// MySQLs returns an object that can list and get MySQLs.
+	MySQLs(namespace string) MySQLNamespaceLister
+	MySQLListerExpansion
 }
 
-// mysqlLister implements the MysqlLister interface.
-type mysqlLister struct {
+// mySQLLister implements the MySQLLister interface.
+type mySQLLister struct {
 	indexer cache.Indexer
 }
 
-// NewMysqlLister returns a new MysqlLister.
-func NewMysqlLister(indexer cache.Indexer) MysqlLister {
-	return &mysqlLister{indexer: indexer}
+// NewMySQLLister returns a new MySQLLister.
+func NewMySQLLister(indexer cache.Indexer) MySQLLister {
+	return &mySQLLister{indexer: indexer}
 }
 
-// List lists all Mysqls in the indexer.
-func (s *mysqlLister) List(selector labels.Selector) (ret []*v1alpha1.Mysql, err error) {
+// List lists all MySQLs in the indexer.
+func (s *mySQLLister) List(selector labels.Selector) (ret []*v1alpha1.MySQL, err error) {
 	err = cache.ListAll(s.indexer, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.Mysql))
+		ret = append(ret, m.(*v1alpha1.MySQL))
 	})
 	return ret, err
 }
 
-// Mysqls returns an object that can list and get Mysqls.
-func (s *mysqlLister) Mysqls(namespace string) MysqlNamespaceLister {
-	return mysqlNamespaceLister{indexer: s.indexer, namespace: namespace}
+// MySQLs returns an object that can list and get MySQLs.
+func (s *mySQLLister) MySQLs(namespace string) MySQLNamespaceLister {
+	return mySQLNamespaceLister{indexer: s.indexer, namespace: namespace}
 }
 
-// MysqlNamespaceLister helps list and get Mysqls.
+// MySQLNamespaceLister helps list and get MySQLs.
 // All objects returned here must be treated as read-only.
-type MysqlNamespaceLister interface {
-	// List lists all Mysqls in the indexer for a given namespace.
+type MySQLNamespaceLister interface {
+	// List lists all MySQLs in the indexer for a given namespace.
 	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha1.Mysql, err error)
-	// Get retrieves the Mysql from the indexer for a given namespace and name.
+	List(selector labels.Selector) (ret []*v1alpha1.MySQL, err error)
+	// Get retrieves the MySQL from the indexer for a given namespace and name.
 	// Objects returned here must be treated as read-only.
-	Get(name string) (*v1alpha1.Mysql, error)
-	MysqlNamespaceListerExpansion
+	Get(name string) (*v1alpha1.MySQL, error)
+	MySQLNamespaceListerExpansion
 }
 
-// mysqlNamespaceLister implements the MysqlNamespaceLister
+// mySQLNamespaceLister implements the MySQLNamespaceLister
 // interface.
-type mysqlNamespaceLister struct {
+type mySQLNamespaceLister struct {
 	indexer   cache.Indexer
 	namespace string
 }
 
-// List lists all Mysqls in the indexer for a given namespace.
-func (s mysqlNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.Mysql, err error) {
+// List lists all MySQLs in the indexer for a given namespace.
+func (s mySQLNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.MySQL, err error) {
 	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.Mysql))
+		ret = append(ret, m.(*v1alpha1.MySQL))
 	})
 	return ret, err
 }
 
-// Get retrieves the Mysql from the indexer for a given namespace and name.
-func (s mysqlNamespaceLister) Get(name string) (*v1alpha1.Mysql, error) {
+// Get retrieves the MySQL from the indexer for a given namespace and name.
+func (s mySQLNamespaceLister) Get(name string) (*v1alpha1.MySQL, error) {
 	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
 	if err != nil {
 		return nil, err
@@ -95,5 +95,5 @@ func (s mysqlNamespaceLister) Get(name string) (*v1alpha1.Mysql, error) {
 	if !exists {
 		return nil, errors.NewNotFound(v1alpha1.Resource("mysql"), name)
 	}
-	return obj.(*v1alpha1.Mysql), nil
+	return obj.(*v1alpha1.MySQL), nil
 }

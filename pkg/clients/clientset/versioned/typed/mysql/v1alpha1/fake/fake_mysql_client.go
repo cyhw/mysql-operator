@@ -28,8 +28,8 @@ type FakeVolcV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeVolcV1alpha1) Mysqls(namespace string) v1alpha1.MysqlInterface {
-	return &FakeMysqls{c, namespace}
+func (c *FakeVolcV1alpha1) MySQLs(namespace string) v1alpha1.MySQLInterface {
+	return &FakeMySQLs{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

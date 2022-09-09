@@ -32,59 +32,59 @@ import (
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// MysqlInformer provides access to a shared informer and lister for
-// Mysqls.
-type MysqlInformer interface {
+// MySQLInformer provides access to a shared informer and lister for
+// MySQLs.
+type MySQLInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.MysqlLister
+	Lister() v1alpha1.MySQLLister
 }
 
-type mysqlInformer struct {
+type mySQLInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewMysqlInformer constructs a new informer for Mysql type.
+// NewMySQLInformer constructs a new informer for MySQL type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewMysqlInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredMysqlInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewMySQLInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredMySQLInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredMysqlInformer constructs a new informer for Mysql type.
+// NewFilteredMySQLInformer constructs a new informer for MySQL type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredMysqlInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredMySQLInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.VolcV1alpha1().Mysqls(namespace).List(context.TODO(), options)
+				return client.VolcV1alpha1().MySQLs(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.VolcV1alpha1().Mysqls(namespace).Watch(context.TODO(), options)
+				return client.VolcV1alpha1().MySQLs(namespace).Watch(context.TODO(), options)
 			},
 		},
-		&mysqlv1alpha1.Mysql{},
+		&mysqlv1alpha1.MySQL{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *mysqlInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredMysqlInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *mySQLInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredMySQLInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *mysqlInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&mysqlv1alpha1.Mysql{}, f.defaultInformer)
+func (f *mySQLInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&mysqlv1alpha1.MySQL{}, f.defaultInformer)
 }
 
-func (f *mysqlInformer) Lister() v1alpha1.MysqlLister {
-	return v1alpha1.NewMysqlLister(f.Informer().GetIndexer())
+func (f *mySQLInformer) Lister() v1alpha1.MySQLLister {
+	return v1alpha1.NewMySQLLister(f.Informer().GetIndexer())
 }

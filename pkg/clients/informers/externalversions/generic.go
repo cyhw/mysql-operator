@@ -54,7 +54,7 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 	switch resource {
 	// Group=volc.bytedance.com, Version=v1alpha1
 	case v1alpha1.SchemeGroupVersion.WithResource("mysqls"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Volc().V1alpha1().Mysqls().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Volc().V1alpha1().MySQLs().Informer()}, nil
 
 	}
 

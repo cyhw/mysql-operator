@@ -28,7 +28,7 @@ import (
 
 type VolcV1alpha1Interface interface {
 	RESTClient() rest.Interface
-	MysqlsGetter
+	MySQLsGetter
 }
 
 // VolcV1alpha1Client is used to interact with features provided by the volc.bytedance.com group.
@@ -36,8 +36,8 @@ type VolcV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *VolcV1alpha1Client) Mysqls(namespace string) MysqlInterface {
-	return newMysqls(c, namespace)
+func (c *VolcV1alpha1Client) MySQLs(namespace string) MySQLInterface {
+	return newMySQLs(c, namespace)
 }
 
 // NewForConfig creates a new VolcV1alpha1Client for the given config.

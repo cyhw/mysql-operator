@@ -30,43 +30,43 @@ import (
 	rest "k8s.io/client-go/rest"
 )
 
-// MysqlsGetter has a method to return a MysqlInterface.
+// MySQLsGetter has a method to return a MySQLInterface.
 // A group's client should implement this interface.
-type MysqlsGetter interface {
-	Mysqls(namespace string) MysqlInterface
+type MySQLsGetter interface {
+	MySQLs(namespace string) MySQLInterface
 }
 
-// MysqlInterface has methods to work with Mysql resources.
-type MysqlInterface interface {
-	Create(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.CreateOptions) (*v1alpha1.Mysql, error)
-	Update(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.UpdateOptions) (*v1alpha1.Mysql, error)
-	UpdateStatus(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.UpdateOptions) (*v1alpha1.Mysql, error)
+// MySQLInterface has methods to work with MySQL resources.
+type MySQLInterface interface {
+	Create(ctx context.Context, mySQL *v1alpha1.MySQL, opts v1.CreateOptions) (*v1alpha1.MySQL, error)
+	Update(ctx context.Context, mySQL *v1alpha1.MySQL, opts v1.UpdateOptions) (*v1alpha1.MySQL, error)
+	UpdateStatus(ctx context.Context, mySQL *v1alpha1.MySQL, opts v1.UpdateOptions) (*v1alpha1.MySQL, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.Mysql, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.MysqlList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.MySQL, error)
+	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.MySQLList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Mysql, err error)
-	MysqlExpansion
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.MySQL, err error)
+	MySQLExpansion
 }
 
-// mysqls implements MysqlInterface
-type mysqls struct {
+// mySQLs implements MySQLInterface
+type mySQLs struct {
 	client rest.Interface
 	ns     string
 }
 
-// newMysqls returns a Mysqls
-func newMysqls(c *VolcV1alpha1Client, namespace string) *mysqls {
-	return &mysqls{
+// newMySQLs returns a MySQLs
+func newMySQLs(c *VolcV1alpha1Client, namespace string) *mySQLs {
+	return &mySQLs{
 		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
 
-// Get takes name of the mysql, and returns the corresponding mysql object, and an error if there is any.
-func (c *mysqls) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Mysql, err error) {
-	result = &v1alpha1.Mysql{}
+// Get takes name of the mySQL, and returns the corresponding mySQL object, and an error if there is any.
+func (c *mySQLs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.MySQL, err error) {
+	result = &v1alpha1.MySQL{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("mysqls").
@@ -77,13 +77,13 @@ func (c *mysqls) Get(ctx context.Context, name string, options v1.GetOptions) (r
 	return
 }
 
-// List takes label and field selectors, and returns the list of Mysqls that match those selectors.
-func (c *mysqls) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.MysqlList, err error) {
+// List takes label and field selectors, and returns the list of MySQLs that match those selectors.
+func (c *mySQLs) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.MySQLList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
 	}
-	result = &v1alpha1.MysqlList{}
+	result = &v1alpha1.MySQLList{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("mysqls").
@@ -94,8 +94,8 @@ func (c *mysqls) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha
 	return
 }
 
-// Watch returns a watch.Interface that watches the requested mysqls.
-func (c *mysqls) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
+// Watch returns a watch.Interface that watches the requested mySQLs.
+func (c *mySQLs) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -109,28 +109,28 @@ func (c *mysqls) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interfac
 		Watch(ctx)
 }
 
-// Create takes the representation of a mysql and creates it.  Returns the server's representation of the mysql, and an error, if there is any.
-func (c *mysqls) Create(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.CreateOptions) (result *v1alpha1.Mysql, err error) {
-	result = &v1alpha1.Mysql{}
+// Create takes the representation of a mySQL and creates it.  Returns the server's representation of the mySQL, and an error, if there is any.
+func (c *mySQLs) Create(ctx context.Context, mySQL *v1alpha1.MySQL, opts v1.CreateOptions) (result *v1alpha1.MySQL, err error) {
+	result = &v1alpha1.MySQL{}
 	err = c.client.Post().
 		Namespace(c.ns).
 		Resource("mysqls").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(mysql).
+		Body(mySQL).
 		Do(ctx).
 		Into(result)
 	return
 }
 
-// Update takes the representation of a mysql and updates it. Returns the server's representation of the mysql, and an error, if there is any.
-func (c *mysqls) Update(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.UpdateOptions) (result *v1alpha1.Mysql, err error) {
-	result = &v1alpha1.Mysql{}
+// Update takes the representation of a mySQL and updates it. Returns the server's representation of the mySQL, and an error, if there is any.
+func (c *mySQLs) Update(ctx context.Context, mySQL *v1alpha1.MySQL, opts v1.UpdateOptions) (result *v1alpha1.MySQL, err error) {
+	result = &v1alpha1.MySQL{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("mysqls").
-		Name(mysql.Name).
+		Name(mySQL.Name).
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(mysql).
+		Body(mySQL).
 		Do(ctx).
 		Into(result)
 	return
@@ -138,22 +138,22 @@ func (c *mysqls) Update(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.Upda
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *mysqls) UpdateStatus(ctx context.Context, mysql *v1alpha1.Mysql, opts v1.UpdateOptions) (result *v1alpha1.Mysql, err error) {
-	result = &v1alpha1.Mysql{}
+func (c *mySQLs) UpdateStatus(ctx context.Context, mySQL *v1alpha1.MySQL, opts v1.UpdateOptions) (result *v1alpha1.MySQL, err error) {
+	result = &v1alpha1.MySQL{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("mysqls").
-		Name(mysql.Name).
+		Name(mySQL.Name).
 		SubResource("status").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(mysql).
+		Body(mySQL).
 		Do(ctx).
 		Into(result)
 	return
 }
 
-// Delete takes name of the mysql and deletes it. Returns an error if one occurs.
-func (c *mysqls) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
+// Delete takes name of the mySQL and deletes it. Returns an error if one occurs.
+func (c *mySQLs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("mysqls").
@@ -164,7 +164,7 @@ func (c *mysqls) Delete(ctx context.Context, name string, opts v1.DeleteOptions)
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *mysqls) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+func (c *mySQLs) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	var timeout time.Duration
 	if listOpts.TimeoutSeconds != nil {
 		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
@@ -179,9 +179,9 @@ func (c *mysqls) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, li
 		Error()
 }
 
-// Patch applies the patch and returns the patched mysql.
-func (c *mysqls) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.Mysql, err error) {
-	result = &v1alpha1.Mysql{}
+// Patch applies the patch and returns the patched mySQL.
+func (c *mySQLs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.MySQL, err error) {
+	result = &v1alpha1.MySQL{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("mysqls").
